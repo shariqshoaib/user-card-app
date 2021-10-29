@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import UserCards from './components/UserCards'
+import Spinner from './components/spinner';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import * as usersActions from './redux/users/actions';
+import * as imagesActions from './redux/images/actions';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { selectIsLoading as selectUsersIsLoading } from './redux/users/selectors';
+import { selectIsLoading as selectImagesIsLoading } from './redux/users/selectors';
+
+import { useEffect } from 'react';
+
+
+
+const App = () => {
+  const isUsersLoading = useSelector(selectUsersIsLoading)
+  const isImagesLoading = useSelector(selectImagesIsLoading)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const initData = () =>{
+      dispatch(usersActions.fetchUsers());
+      dispatch(imagesActions.fetchImages())
+    }
+    initData();
+  },[dispatch])
+  
+  if(isUsersLoading || isImagesLoading) return <Spinner />
+  return <UserCards />
 }
 
 export default App;
