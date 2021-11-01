@@ -2,13 +2,14 @@ import './UserCard.css'
 
 import React from 'react'
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, images }) => {
+    const userLink = images[user.username]
     return (
         <div className='container'>
             <div className='user-card'>
             {/* //  USER AVTAR */}
                 <div className='avatar-container'>
-                    <img src={ user.userLink } alt="Avatar" className='avatar' />
+                    <img src={ userLink } alt="Avatar" className='avatar' />
                 </div>
             {/* //  USER DETAILS */}
                 <div className='user-details'>
